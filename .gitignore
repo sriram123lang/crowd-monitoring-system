@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Large files
+*.mp4
+*.avi
+*.onnx
+models/
+video.mp4
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+debug.log
