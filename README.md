@@ -49,7 +49,7 @@ Open browser: **http://localhost:5000**
 
 ## 📊 Screenshots
 
-[Add screenshots of your dashboard here]
+<img width="1366" height="768" alt="2026-01-02" src="https://github.com/user-attachments/assets/4ab24e9d-5d74-4479-ba27-68392b38e7fe" />
 
 ## 🎯 Use Cases
 
@@ -61,18 +61,11 @@ Open browser: **http://localhost:5000**
 
 ## 🏆 Hackathon Project
 
-Built for [Your Hackathon Name] - [Date]
-
-## 📄 License
-
-MIT License
-
-## 👥 Team
-
-- [Your Name] - [Your Role]
+Built for AI POWERED CROWD MONITORING & SAFETY ALERT SYSTEM - 09/01/2026
 
 ## 🙏 Acknowledgments
 
 - YOLOv8 for object detection
 - Flask for web framework
+
 - Claude AI for development assistance
