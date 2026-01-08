@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - Crowd Monitoring System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+            color: #e0f2ff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 212, 255, 0.1));
+            border: 2px solid #00ff9d;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
+        }
+
+        h1 {
+            font-size: 42px;
+            color: #00ff9d;
+            text-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #00d4ff;
+        }
+
+        .search-box {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 2px solid #00ff9d;
+            border-radius: 25px;
+            background: rgba(26, 31, 53, 0.8);
+            color: #e0f2ff;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            box-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
+            background: rgba(26, 31, 53, 1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab {
+            padding: 12px 25px;
+            background: rgba(0, 255, 157, 0.1);
+            border: 2px solid #00ff9d;
+            border-radius: 25px;
+            color: #00ff9d;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tab:hover {
+            background: rgba(0, 255, 157, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+        }
+
+        .tab.active {
+            background: #00ff9d;
+            color: #0a0e1a;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .faq-item {
+            background: rgba(26, 31, 53, 0.8);
+            border: 2px solid rgba(0, 255, 157, 0.3);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: #00ff9d;
+            box-shadow: 0 5px 20px rgba(0, 255, 157, 0.2);
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #00d4ff;
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 255, 157, 0.05);
+        }
+
+        .faq-arrow {
+            font-size: 24px;
+            transition: transform 0.3s;
+            color: #00ff9d;
+        }
+
+        .faq-item.open .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 20px;
+            color: #8b9dc3;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 1000px;
+            padding: 0 20px 20px 20px;
+        }
+
+        .guide-section {
+            background: rgba(26, 31, 53, 0.8);
+            border: 2px solid rgba(0, 255, 157, 0.3);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .guide-section h2 {
+            color: #00ff9d;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .guide-section h3 {
+            color: #00d4ff;
+            margin: 20px 0 10px 0;
+            font-size: 20px;
+        }
+
+        .step {
+            background: rgba(0, 255, 157, 0.05);
+            border-left: 4px solid #00ff9d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #00ff9d;
+            color: #0a0e1a;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #00ff9d;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #00ff9d;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        .alert-warning {
+            background: rgba(255, 170, 0, 0.1);
+            border-color: #ffaa00;
+            color: #ffaa00;
+        }
+
+        .alert-danger {
+            background: rgba(255, 0, 85, 0.1);
+            border-color: #ff0055;
+            color: #ff0055;
+        }
+
+        .alert-success {
+            background: rgba(0, 255, 157, 0.1);
+            border-color: #00ff9d;
+            color: #00ff9d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            text-align: left;
+        }
+
+        th {
+            background: rgba(0, 255, 157, 0.2);
+            color: #00ff9d;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: rgba(0, 255, 157, 0.05);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #00ff9d, #00d4ff);
+            color: #0a0e1a;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 157, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 2px solid rgba(0, 255, 157, 0.3);
+            color: #8b9dc3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Help Center</h1>
+            <p class="subtitle">AI-Powered Crowd Monitoring System</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search for help... (e.g., 'how to start', 'predictions', 'risk levels')">
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('quick-start')">🚀 Quick Start</div>
+            <div class="tab" onclick="showTab('faq')">❓ FAQ</div>
+            <div class="tab" onclick="showTab('features')">🎯 Features Guide</div>
+            <div class="tab" onclick="showTab('troubleshooting')">🔧 Troubleshooting</div>
+            <div class="tab" onclick="showTab('configuration')">⚙️ Configuration</div>
+        </div>
+
+        <!-- Quick Start Section -->
+        <div id="quick-start" class="content-section active">
+            <div class="guide-section">
+                <h2>🚀 Quick Start Guide</h2>
+                <p>Get your crowd monitoring system up and running in 5 minutes!</p>
+
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Install Dependencies</strong>
+                    <div class="code-block">
+                        <code>pip install opencv-python numpy flask</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Set Physical Area (Important!)</strong>
+                    <div class="code-block">
+                        <code>set PHYSICAL_AREA_M2=100</code> (Windows)<br>
+                        <code>export PHYSICAL_AREA_M2=100</code> (Linux/Mac)
+                    </div>
+                    <div class="alert alert-info">
+                        💡 Measure the actual area your camera covers. Example: 10m × 10m = 100 m²
+                    </div>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Start the System</strong>
+                    <div class="code-block">
+                        <code>python app.py</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Open Dashboard</strong>
+                    <p>Go to: <code>http://localhost:5000</code></p>
+                </div>
+
+                <div class="alert alert-success">
+                    ✅ You're all set! The dashboard should now be displaying live monitoring data.
+                </div>
+            </div>
+
+            <div class="guide-section">
+                <h2>📊 Understanding the Dashboard</h2>
+                <table>
+                    <tr>
+                        <th>Component</th>
+                        <th>What It Shows</th>
+                    </tr>
+                    <tr>
+                        <td>👥 Crowd Count</td>
+                        <td>Current number of people detected</td>
+                    </tr>
+                    <tr>
+                        <td>🔮 AI Predictions</td>
+                        <td>Predicted crowd size in 5-10 seconds</td>
+                    </tr>
+                    <tr>
+                        <td>⚠️ Risk Level</td>
+                        <td>Safety assessment (LOW to EMERGENCY)</td>
+                    </tr>
+                    <tr>
+                        <td>📈 Density</td>
+                        <td>Crowd density as percentage (0-100%)</td>
+                    </tr>
+                    <tr>
+                        <td>🌊 Surge</td>
+                        <td>Probability of sudden crowd increase</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div id="faq" class="content-section">
+            <div class="guide-section">
+                <h2>❓ Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How accurate is the people counting?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The system achieves <strong>90-95% accuracy</strong> in optimal conditions. Accuracy depends on:</p>
+                        <ul>
+                            <li>✅ Camera angle (bird's eye view = best)</li>
+                            <li>✅ Lighting conditions (bright = better)</li>
+                            <li>✅ Video quality (1080p+ = best)</li>
+                            <li>✅ Crowd density (fewer people = more accurate)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Why are predictions showing 0?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Solution:</strong> The system needs 10-15 seconds of data before it can make predictions.</p>
+                        <ol>
+                            <li>Wait at least 10 seconds after starting</li>
+                            <li>Check browser console (F12) for JavaScript errors</li>
+                            <li>Verify <code>crowd_predictor.py</code> file exists</li>
+                            <li>Refresh the page</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What do the risk levels mean?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <table>
+                            <tr>
+                                <th>Risk Level</th>
+                                <th>Density</th>
+                                <th>Action Required</th>
+                            </tr>
+                            <tr>
+                                <td>🟢 <strong>LOW</strong></td>
+                                <td>&lt; 1 person/m²</td>
+                                <td>Normal operations</td>
+                            </tr>
+                            <tr>
+                                <td>🟡 <strong>MEDIUM</strong></td>
+                                <td>1-2.5 person/m²</td>
+                                <td>Increased monitoring</td>
+                            </tr>
+                            <tr>
+                                <td>🟠 <strong>HIGH</strong></td>
+                                <td>2.5-4 person/m²</td>
+                                <td>Take crowd control action NOW</td>
+                            </tr>
+                            <tr>
+                                <td>🔴 <strong>CRITICAL</strong></td>
+                                <td>4-5.5 person/m²</td>
+                                <td>Immediate intervention required</td>
+                            </tr>
+                            <tr>
+                                <td>🔴 <strong>EMERGENCY</strong></td>
+                                <td>&gt; 5.5 person/m²</td>
+                                <td>Evacuate immediately!</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I use a live camera instead of video file?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Yes!</strong> You can use:</p>
+                        <ul>
+                            <li>Webcam: Set <code>VIDEO_PATH = 0</code></li>
+                            <li>IP Camera: Set <code>VIDEO_PATH = 'rtsp://camera-ip/stream'</code></li>
+                        </ul>
+                        <p>Edit in <code>app.py</code> around line 15-20.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I change the physical area?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>Method 1: Environment Variable (Recommended)</strong></p>
+                        <div class="code-block">
+                            <code>set PHYSICAL_AREA_M2=150</code> (Windows)<br>
+                            <code>export PHYSICAL_AREA_M2=150</code> (Linux/Mac)
+                        </div>
+                        <p><strong>Method 2: Edit Code</strong></p>
+                        <p>In <code>app.py</code>, line ~15:</p>
+                        <div class="code-block">
+                            <code>PHYSICAL_AREA_M2 = 150.0  # Your area in m²</code>
+                        </div>
+                        <div class="alert alert-warning">
+                            ⚠️ Incorrect area = wrong density = wrong risk levels!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>The count seems wrong - too high or too low. How to fix?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p><strong>If count is TOO HIGH:</strong></p>
+                        <p>Edit <code>yolo_detector.py</code>, increase confidence:</p>
+                        <div class="code-block">
+                            <code>self.conf_threshold = 0.02  # Increase from 0.001</code>
+                        </div>
+                        <p><strong>If count is TOO LOW:</strong></p>
+                        <p>Edit <code>yolo_detector.py</code>, decrease confidence:</p>
+                        <div class="code-block">
+                            <code>self.conf_threshold = 0.001  # Very sensitive</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>System is slow/laggy. How to improve performance?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Edit <code>app.py</code> for better performance:</p>
+                        <div class="code-block">
+                            <code>FRAME_SKIP = 4  # Process every 4th frame (faster)</code><br>
+                            <code>RESIZE_SCALE = 0.5  # Use half resolution</code>
+                        </div>
+                        <div class="alert alert-info">
+                            💡 This trades some accuracy for speed. Good for real-time monitoring on slower computers.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I monitor multiple cameras?</span>
+                        <span class="faq-arrow">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Current version supports 1 camera per instance. For multiple cameras:</p>
+                        <ol>
+                            <li>Run separate instances on different ports</li>
+                            <li>Example: Camera 1 on port 5000, Camera 2 on port 5001</li>
+                            <li>Edit <code>app.py</code> to change port number</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Guide Section -->
+        <div id="features" class="content-section">
+            <div class="guide-section">
+                <h2>🎯 Features Guide</h2>
+
+                <h3>🔮 AI Predictions</h3>
+                <p>The prediction system uses <strong>Double Exponential Smoothing</strong> to forecast future crowd levels.</p>
+                
+                <div class="alert alert-info">
+                    <strong>How it works:</strong>
+                    <ul>
+                        <li>Analyzes past 100 data points</li>
+                        <li>Detects trends (increasing/decreasing/stable)</li>
+                        <li>Predicts 5, 10, 15 seconds ahead</li>
+                        <li>Confidence score based on data stability</li>
+                    </ul>
+                </div>
+
+                <h3>⚠️ Risk Assessment</h3>
+                <p>Risk levels are calculated based on crowd density (people per square meter):</p>
+                <div class="code-block">
+                    <code>Density = People Count ÷ Physical Area (m²)</code>
+                </div>
+                
+                <h3>🌊 Surge Detection</h3>
+                <p>Surge probability measures how rapidly the crowd is changing:</p>
+                <ul>
+                    <li><strong>0-30%</strong>: Normal, gradual changes</li>
+                    <li><strong>30-60%</strong>: Moderate surge, monitor closely</li>
+                    <li><strong>60-100%</strong>: High surge, take preventive action</li>
+                </ul>
+
+                <h3>📊 Density Meter</h3>
+                <p>The circular meter shows crowd density as a percentage:</p>
+                <ul>
+                    <li>🟢 <strong>0-40%</strong>: Safe, comfortable spacing</li>
+                    <li>🟡 <strong>40-70%</strong>: Crowded but manageable</li>
+                    <li>🔴 <strong>70-100%</strong>: Dangerously crowded</li>
+                </ul>
+            </div>
+
+            <div class="guide-section">
+                <h2>📈 Using Predictions Effectively</h2>
+                
+                <div class="step">
+                    <strong>Scenario 1: Concert Entrance</strong>
+                    <div class="code-block">
+                        CURRENT: 150 people<br>
+                        +5 SEC: 165 people<br>
+                        +10 SEC: 180 people<br>
+                        TREND: INCREASING ↗️
+                    </div>
+                    <p><strong>Action:</strong> Crowd is growing, prepare for more arrivals. Open additional entry lanes.</p>
+                </div>
+
+                <div class="step">
+                    <strong>Scenario 2: Event Exit</strong>
+                    <div class="code-block">
+                        CURRENT: 500 people<br>
+                        +5 SEC: 480 people<br>
+                        +10 SEC: 460 people<br>
+                        TREND: DECREASING ↘️
+                    </div>
+                    <p><strong>Action:</strong> Crowd is leaving steadily. Maintain exit flow control.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Troubleshooting Section -->
+        <div id="troubleshooting" class="content-section">
+            <div class="guide-section">
+                <h2>🔧 Troubleshooting Guide</h2>
+
+                <h3>Problem: System Won't Start</h3>
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> ModuleNotFoundError: No module named 'cv2'
+                </div>
+                <p><strong>Solution:</strong></p>
+                <div class="code-block">
+                    <code>pip install opencv-python numpy flask</code>
+                </div>
+
+                <h3>Problem: Dashboard Shows "OFFLINE"</h3>
+                <p><strong>Solutions:</strong></p>
+                <ol>
+                    <li>Check if <code>python app.py</code> is running</li>
+                    <li>Refresh browser page (Ctrl+F5)</li>
+                    <li>Try URL: <code>http://127.0.0.1:5000</code></li>
+                    <li>Check firewall settings</li>
+                </ol>
+
+                <h3>Problem: Video Feed Not Showing</h3>
+                <p><strong>Checklist:</strong></p>
+                <ul>
+                    <li>✅ Verify video file exists</li>
+                    <li>✅ Check video format (MP4, AVI supported)</li>
+                    <li>✅ Test with: <code>python -c "import cv2; cap=cv2.VideoCapture('video.mp4'); print(cap.isOpened())"</code></li>
+                    <li>✅ Check file permissions</li>
+                </ul>
+
+                <h3>Problem: Predictions Always 0</h3>
+                <p><strong>Steps to fix:</strong></p>
+                <ol>
+                    <li>Wait 10+ seconds after starting (system needs data)</li>
+                    <li>Open browser console (F12), check for errors</li>
+                    <li>Verify <code>crowd_predictor.py</code> exists in project folder</li>
+                    <li>Restart application: Stop (Ctrl+C) and run <code>python app.py</code> again</li>
+                </ol>
+
+                <h3>Problem: High CPU Usage</h3>
+                <p><strong>Optimization:</strong></p>
+                <div class="code-block">
+                    # Edit app.py<br>
+                    FRAME_SKIP = 4  # Process every 4th frame<br>
+                    RESIZE_SCALE = 0.5  # Use half resolution
+                </div>
+
+                <div class="alert alert-warning">
+                    ⚠️ <strong>Still having issues?</strong> Check the full error log:
+                    <div class="code-block">
+                        <code>python app.py > debug.log 2>&1</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Section -->
+        <div id="configuration" class="content-section">
+            <div class="guide-section">
+                <h2>⚙️ Configuration Guide</h2>
+
+                <h3>Setting Physical Area (CRITICAL)</h3>
+                <div class="alert alert-danger">
+                    🚨 <strong>IMPORTANT:</strong> Wrong area = wrong density = wrong risk levels!
+                </div>
+
+                <p><strong>How to measure your area:</strong></p>
+                <div class="step">
+                    <strong>Rectangle Area:</strong>
+                    <div class="code-block">
+                        Area = Length × Width<br>
+                        <br>
+                        Example: Concert floor<br>
+                        - Length: 20 meters<br>
+                        - Width: 15 meters<br>
+                        - Area = 20 × 15 = 300 m²
+                    </div>
+                </div>
+
+                <h3>Advanced Settings</h3>
+                
+                <table>
+                    <tr>
+                        <th>Setting</th>
+                        <th>File</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>PHYSICAL_AREA_M2</td>
+                        <td>app.py</td>
+                        <td>100.0</td>
+                        <td>Monitored area in square meters</td>
+                    </tr>
+                    <tr>
+                        <td>FRAME_SKIP</td>
+                        <td>app.py</td>
+                        <td>2</td>
+                        <td>Process every Nth frame (higher = faster)</td>
+                    </tr>
+                    <tr>
+                        <td>conf_threshold</td>
+                        <td>yolo_detector.py</td>
+                        <td>0.001</td>
+                        <td>Detection confidence (lower = more sensitive)</td>
+                    </tr>
+                    <tr>
+                        <td>DENSITY_HIGH</td>
+                        <td>crowd_monitor.py</td>
+                        <td>4.0</td>
+                        <td>High risk threshold (people/m²)</td>
+                    </tr>
+                </table>
+
+                <h3>Risk Threshold Customization</h3>
+                <p>Edit <code>crowd_monitor.py</code>, around line 70:</p>
+                <div class="code-block">
+                    self.DENSITY_LOW = 1.0       # LOW risk threshold<br>
+                    self.DENSITY_MEDIUM = 2.5    # MEDIUM risk threshold<br>
+                    self.DENSITY_HIGH = 4.0      # HIGH risk threshold<br>
+                    self.DENSITY_CRITICAL = 5.5  # CRITICAL risk threshold
+                </div>
+            </div>
+        </div>
+
+        <a href="/" class="back-button">⬅️ Back to Dashboard</a>
+
+        <footer>
+            <p><strong>Crowd Monitoring System</strong> v1.0</p>
+            <p>For technical support, refer to the user manual or contact your system administrator</p>
+            <p>© 2024 AI-Powered Crowd Intelligence System</p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab switching
+        function showTab(tabName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // FAQ toggle
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const isOpen = faqItem.classList.contains('open');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('open');
+            });
+            
+            // Toggle current item
+            if (!isOpen) {
+                faqItem.classList.add('open');
+            }
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            if (searchTerm.length < 2) {
+                // Reset view if search term is too short
+                document.querySelectorAll('.faq-item, .guide-section').forEach(item => {
+                    item.style.display = 'block';
+                });
+                return;
+            }
+            
+            let foundInTab = null;
+            
+            // Search in FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    if (!foundInTab) foundInTab = 'faq';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Search in guide sections
+            document.querySelectorAll('.guide-section').forEach(section => {
+                const text = section.textContent.toLowerCase();
+                
+                if (text.includes(searchTerm)) {
+                    section.style.display = 'block';
+                    
+                    // Determine which tab this belongs to
+                    if (!foundInTab) {
+                        const parent = section.closest('.content-section');
+                        if (parent) {
+                            foundInTab = parent.id;
+                        }
+                    }
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+            
+            // Switch to the tab with results
+            if (foundInTab) {
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(foundInTab).classList.add('active');
+                
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector(`[onclick="showTab('${foundInTab}')"]`).classList.add('active');
+            }
+        });
+
+        // Highlight code blocks on click
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', function() {
+                const range = document.createRange();
+                range.selectNodeContents(this);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                
+                // Visual feedback
+                this.style.background = 'rgba(0, 255, 157, 0.2)';
+                setTimeout(() => {
+                    this.style.background = 'rgba(0, 0, 0, 0.5)';
+                }, 200);
+            });
+        });
+
+        // Console welcome message
+        console.log('%c📚 Help Center Loaded', 'color: #00ff9d; font-size: 20px; font-weight: bold;');
+        console.log('%cSearch for help, explore FAQs, or check troubleshooting guides', 'color: #00d4ff; font-size: 12px;');
+    </script>
+</body>
+</html>

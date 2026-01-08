@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Reference Guide - Crowd Monitoring</title>
+    <style>
+        @media print {
+            body { background: white; }
+            .no-print { display: none; }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 4px solid #00ff9d;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #0a0e1a;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            border: 2px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .section h2 {
+            color: #00ff9d;
+            font-size: 24px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #00ff9d;
+            padding-bottom: 10px;
+        }
+
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .risk-table th,
+        .risk-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .risk-table th {
+            background: #0a0e1a;
+            color: white;
+            font-weight: bold;
+        }
+
+        .risk-low { background: #d4edda; }
+        .risk-medium { background: #fff3cd; }
+        .risk-high { background: #f8d7da; }
+        .risk-critical { background: #f5c6cb; }
+
+        .command-box {
+            background: #2d3748;
+            color: #00ff9d;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            border-left: 4px solid #00ff9d;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00ff9d;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffaa00;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid #0c5460;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .emergency {
+            background: #f8d7da;
+            border: 3px solid #ff0055;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .emergency h3 {
+            color: #ff0055;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #00ff9d;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .print-button {
+            background: #00ff9d;
+            color: #0a0e1a;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .print-button:hover {
+            background: #00d47d;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        table {
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .metric-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .metric-value {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 CROWD MONITORING SYSTEM</h1>
+            <p class="subtitle">Quick Reference Guide - Keep Near Your Monitoring Station</p>
+        </div>
+
+        <button class="print-button no-print" onclick="window.print()">🖨️ Print This Guide</button>
+
+        <div class="grid">
+            <!-- Quick Start -->
+            <div class="section">
+                <h2>🚀 Quick Start (5 Minutes)</h2>
+                <div>
+                    <p><span class="step-number">1</span> Install dependencies</p>
+                    <div class="command-box">pip install opencv-python numpy flask</div>
+                </div>
+                <div>
+                    <p><span class="step-number">2</span> Set physical area</p>
+                    <div class="command-box">set PHYSICAL_AREA_M2=100</div>
+                </div>
+                <div>
+                    <p><span class="step-number">3</span> Start system</p>
+                    <div class="command-box">python app.py</div>
+                </div>
+                <div>
+                    <p><span class="step-number">4</span> Open dashboard</p>
+                    <div class="command-box">http://localhost:5000</div>
+                </div>
+            </div>
+
+            <!-- Risk Levels -->
+            <div class="section">
+                <h2>⚠️ Risk Level Guide</h2>
+                <table class="risk-table">
+                    <tr>
+                        <th>Level</th>
+                        <th>Density</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr class="risk-low">
+                        <td><strong>🟢 LOW</strong></td>
+                        <td>&lt;1 p/m²</td>
+                        <td>Normal ops</td>
+                    </tr>
+                    <tr class="risk-medium">
+                        <td><strong>🟡 MEDIUM</strong></td>
+                        <td>1-2.5 p/m²</td>
+                        <td>Monitor closely</td>
+                    </tr>
+                    <tr class="risk-high">
+                        <td><strong>🟠 HIGH</strong></td>
+                        <td>2.5-4 p/m²</td>
+                        <td><strong>ACT NOW!</strong></td>
+                    </tr>
+                    <tr class="risk-critical">
+                        <td><strong>🔴 CRITICAL</strong></td>
+                        <td>&gt;5.5 p/m²</td>
+                        <td><strong>EVACUATE!</strong></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Dashboard Panels -->
+            <div class="section">
+                <h2>📊 Dashboard Panel Guide</h2>
+                <div class="metric-row">
+                    <span class="metric-label">👥 Crowd Count</span>
+                    <span class="metric-value">Current people detected</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">🔮 AI Predictions</span>
+                    <span class="metric-value">Future count (+5s, +10s)</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">⚠️ Risk Level</span>
+                    <span class="metric-value">Safety assessment</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">📈 Density Meter</span>
+                    <span class="metric-value">Crowd density (0-100%)</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">🌊 Surge Probability</span>
+                    <span class="metric-value">Rapid change indicator</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">📉 Timeline</span>
+                    <span class="metric-value">Historical trend graph</span>
+                </div>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="section">
+                <h2>🔧 Quick Troubleshooting</h2>
+                <ul class="checklist">
+                    <li><strong>Dashboard offline?</strong> Check if app.py is running</li>
+                    <li><strong>Count seems wrong?</strong> Verify PHYSICAL_AREA_M2</li>
+                    <li><strong>Predictions show 0?</strong> Wait 10+ seconds</li>
+                    <li><strong>System slow?</strong> Increase FRAME_SKIP</li>
+                    <li><strong>Video not loading?</strong> Check video file path</li>
+                </ul>
+                <div class="warning-box">
+                    <strong>⚠️ Common Mistake:</strong> Wrong physical area = incorrect risk levels!
+                </div>
+            </div>
+
+            <!-- Understanding Predictions -->
+            <div class="section full-width">
+                <h2>🔮 Understanding AI Predictions</h2>
+                <div class="grid">
+                    <div>
+                        <h3>📈 Trend: INCREASING</h3>
+                        <div class="command-box">
+                            CURRENT: 150<br>
+                            +5 SEC: 165<br>
+                            +10 SEC: 180
+                        </div>
+                        <p><strong>Meaning:</strong> Crowd is growing. Prepare for more arrivals.</p>
+                    </div>
+                    <div>
+                        <h3>📉 Trend: DECREASING</h3>
+                        <div class="command-box">
+                            CURRENT: 500<br>
+                            +5 SEC: 480<br>
+                            +10 SEC: 460
+                        </div>
+                        <p><strong>Meaning:</strong> Crowd is leaving. Maintain exit flow.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <strong>💡 Confidence Score:</strong> 70-100% = Reliable prediction | 0-50% = Need more data (wait 10s)
+                </div>
+            </div>
+
+            <!-- Emergency Protocol -->
+            <div class="section full-width emergency">
+                <h3>🚨 EMERGENCY RESPONSE PROTOCOL</h3>
+                <div class="grid">
+                    <div>
+                        <h4>When Risk = HIGH 🟠</h4>
+                        <ol>
+                            <li>Stop new entries immediately</li>
+                            <li>Open additional exits</li>
+                            <li>Deploy crowd control</li>
+                            <li>Make announcements</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h4>When Risk = CRITICAL/EMERGENCY 🔴</h4>
+                        <ol>
+                            <li><strong>INITIATE EVACUATION</strong></li>
+                            <li>Call emergency services</li>
+                            <li>Execute emergency protocol</li>
+                            <li>Account for all personnel</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuration -->
+            <div class="section">
+                <h2>⚙️ Key Configuration</h2>
+                <h4>Setting Physical Area (CRITICAL!)</h4>
+                <p>Measure your monitored area:</p>
+                <div class="command-box">
+                    Area = Length × Width<br>
+                    Example: 10m × 10m = 100 m²
+                </div>
+                <p>Set before starting:</p>
+                <div class="command-box">
+                    Windows: set PHYSICAL_AREA_M2=100<br>
+                    Linux: export PHYSICAL_AREA_M2=100
+                </div>
+                <div class="warning-box">
+                    <strong>Why it matters:</strong> Density = People ÷ Area<br>
+                    Wrong area = Wrong density = Wrong risk!
+                </div>
+            </div>
+
+            <!-- Performance Tips -->
+            <div class="section">
+                <h2>⚡ Performance Tips</h2>
+                <h4>If system is slow/laggy:</h4>
+                <p>Edit <strong>app.py</strong>:</p>
+                <div class="command-box">
+                    FRAME_SKIP = 4<br>
+                    # Process every 4th frame
+                </div>
+                <div class="command-box">
+                    RESIZE_SCALE = 0.5<br>
+                    # Use half resolution
+                </div>
+                <h4>If count is inaccurate:</h4>
+                <p>Edit <strong>yolo_detector.py</strong>:</p>
+                <div class="command-box">
+                    # Too many false positives?<br>
+                    self.conf_threshold = 0.02<br>
+                    <br>
+                    # Missing people?<br>
+                    self.conf_threshold = 0.001
+                </div>
+            </div>
+
+            <!-- Surge Understanding -->
+            <div class="section full-width">
+                <h2>🌊 Surge Detection Guide</h2>
+                <table class="risk-table">
+                    <tr>
+                        <th>Surge %</th>
+                        <th>Meaning</th>
+                        <th>Action</th>
+                        <th>Example Situation</th>
+                    </tr>
+                    <tr class="risk-low">
+                        <td>0-30%</td>
+                        <td>Normal changes</td>
+                        <td>Continue monitoring</td>
+                        <td>Steady crowd flow</td>
+                    </tr>
+                    <tr class="risk-medium">
+                        <td>30-60%</td>
+                        <td>Moderate surge</td>
+                        <td>Increase monitoring</td>
+                        <td>Event break, people moving</td>
+                    </tr>
+                    <tr class="risk-high">
+                        <td>60-80%</td>
+                        <td>High surge</td>
+                        <td><strong>Take preventive action</strong></td>
+                        <td>Doors opening, rush starting</td>
+                    </tr>
+                    <tr class="risk-critical">
+                        <td>80-100%</td>
+                        <td>Extreme surge</td>
+                        <td><strong>Emergency response!</strong></td>
+                        <td>Panic, stampede risk</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Density Examples -->
+            <div class="section full-width">
+                <h2>📏 Real-World Density Examples</h2>
+                <div class="grid">
+                    <div>
+                        <h4>Safe Levels (0-40%)</h4>
+                        <ul>
+                            <li><strong>0.5 p/m²</strong> - Normal shopping mall</li>
+                            <li><strong>0.8 p/m²</strong> - Museum exhibition</li>
+                            <li><strong>1.0 p/m²</strong> - Busy train station</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Crowded Levels (40-70%)</h4>
+                        <ul>
+                            <li><strong>2.5 p/m²</strong> - Packed concert (standing)</li>
+                            <li><strong>3.5 p/m²</strong> - Busy sports stadium</li>
+                            <li><strong>4.0 p/m²</strong> - Very crowded event</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Dangerous Levels (70-100%)</h4>
+                        <ul>
+                            <li><strong>5.0 p/m²</strong> - Critical crowding</li>
+                            <li><strong>6.0+ p/m²</strong> - Crush/stampede risk</li>
+                            <li><strong>Action:</strong> Immediate evacuation!</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>How to Estimate</h4>
+                        <p>1 person needs ~1m² for comfort</p>
+                        <p>More than 4 people/m² = dangerous</p>
+                        <div class="warning-box">
+                            <strong>Safety Standard:</strong> Keep density below 2.5 p/m² for public events
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Checklist -->
+            <div class="section">
+                <h2>✅ Daily Operations Checklist</h2>
+                <h4>Before Event:</h4>
+                <ul class="checklist">
+                    <li>Set correct PHYSICAL_AREA_M2</li>
+                    <li>Test with sample video</li>
+                    <li>Verify all panels updating</li>
+                    <li>Train staff on risk levels</li>
+                    <li>Test emergency protocols</li>
+                </ul>
+                <h4>During Event:</h4>
+                <ul class="checklist">
+                    <li>Monitor every 30 seconds</li>
+                    <li>Watch for surge indicators</li>
+                    <li>Log any HIGH/CRITICAL alerts</li>
+                    <li>Keep emergency exits clear</li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="section">
+                <h2>📞 Support & Resources</h2>
+                <div class="metric-row">
+                    <span class="metric-label">📖 User Manual</span>
+                    <span class="metric-value">Complete documentation</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">❓ FAQ</span>
+                    <span class="metric-value">http://localhost:5000/help</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">🔧 Troubleshooting</span>
+                    <span class="metric-value">Check console logs</span>
+                </div>
+                <div class="warning-box">
+                    <strong>Emergency:</strong> Always have backup manual monitoring during events!
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box" style="margin-top: 30px;">
+            <strong>📌 Quick Access Commands:</strong>
+            <div class="command-box" style="margin-top: 10px;">
+                Start System: python app.py<br>
+                Dashboard: http://localhost:5000<br>
+                Help Center: http://localhost:5000/help<br>
+                Stop System: Ctrl + C
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; padding: 20px; border-top: 2px solid #ddd;">
+            <p><strong>Crowd Monitoring System v1.0</strong></p>
+            <p>AI-Powered Predictive Analytics for Public Safety</p>
+            <p style="margin-top: 10px; color: #666;">Last Updated: December 2024</p>
+        </div>
+    </div>
+
+    <script>
+        console.log('%c📋 Quick Reference Guide Loaded', 'color: #00ff9d; font-size: 16px; font-weight: bold;');
+        console.log('%cPress Ctrl+P or click Print button to print this guide', 'color: #00d4ff; font-size: 12px;');
+    </script>
+</body>
+</html>

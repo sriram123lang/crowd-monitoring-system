@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Cyber Crowd Intelligence System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_advanced.css') }}">
+    <style>
+        /* Help & Documentation Buttons */
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .settings-button,
+        .help-button, 
+        .faq-button, 
+        .manual-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(0, 255, 157, 0.1);
+            border: 2px solid #00ff9d;
+            border-radius: 20px;
+            color: #00ff9d;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+       
+
+        .settings-button:hover {
+            background: rgba(255, 170, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 170, 0, 0.3);
+        }
+
+        .help-button:hover, 
+        .faq-button:hover, 
+        .manual-button:hover {
+            background: rgba(0, 255, 157, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+        }
+
+        .help-button.active {
+            background: #00ff9d;
+            color: #0a0e1a;
+        }
+
+        /* Floating Help Widget */
+        .floating-help {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .floating-help-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00ff9d, #00d4ff);
+            border: none;
+            color: #0a0e1a;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 255, 157, 0.5);
+            transition: all 0.3s;
+        }
+
+        .floating-help-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(0, 255, 157, 0.7);
+        }
+
+        .floating-help-menu {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            background: rgba(10, 14, 26, 0.95);
+            border: 2px solid #00ff9d;
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .floating-help-menu.active {
+            display: flex;
+        }
+
+        .floating-help-menu a {
+            padding: 10px 15px;
+            color: #00ff9d;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .floating-help-menu a:hover {
+            border-left-color: #00ff9d;
+            background: rgba(0, 255, 157, 0.1);
+            padding-left: 20px;
+        }
+
+        /* Help Info Modal */
+        .help-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-modal.active {
+            display: flex;
+        }
+
+        .help-modal-content {
+            background: rgba(10, 14, 26, 0.95);
+            border: 2px solid #00ff9d;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .help-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #00ff9d;
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .help-modal-title {
+            color: #00ff9d;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
+        }
+
+        .help-modal-text {
+            color: #8b9dc3;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Quick Tips */
+        .quick-tips {
+            background: rgba(0, 255, 157, 0.05);
+            border-left: 3px solid #00ff9d;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .quick-tips strong {
+            color: #00ff9d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="cyber-background">
+        <div class="grid-overlay"></div>
+        <div class="scan-line"></div>
+        <canvas id="particles"></canvas>
+    </div>
+
+    <div class="container">
+        <!-- Futuristic Header with Settings Button -->
+        <header class="cyber-header">
+            <div class="header-left">
+                <div class="logo-container">
+                    <div class="logo-hexagon"></div>
+                    <h1 class="cyber-title">
+                        <span class="glitch" data-text="CROWD INTELLIGENCE">CROWD INTELLIGENCE</span>
+                    </h1>
+                </div>
+                <p class="subtitle">AI-POWERED PREDICTIVE ANALYTICS</p>
+            </div>
+            <div class="header-right">
+                <!-- Help & Documentation Buttons with Settings -->
+                <div class="header-icons">
+                   
+                    <a href="/help" class="help-button" target="_blank" title="Open Help Center">
+                        <span>📚</span> Help
+                    </a>
+                   
+                    </a>
+                    <a href="/manual" class="manual-button" target="_blank" title="User Manual">
+                        <span>📖</span> Manual
+                    </a>
+                </div>
+
+                <!-- System Status -->
+                <div class="status-panel">
+                    <div class="status-item">
+                        <span class="status-dot" id="systemDot"></span>
+                        <span class="status-label" id="systemStatus">INITIALIZING</span>
+                    </div>
+                    <div class="time-display" id="currentTime">00:00:00</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Grid -->
+        <div class="dashboard-container">
+            <!-- LEFT COLUMN: Live Video Feed -->
+            <div class="column column-left">
+                <div class="cyber-card video-card">
+                    <div class="card-header-cyber">
+                        <span class="header-icon">📹</span>
+                        <h2>LIVE SURVEILLANCE FEED</h2>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="video-container">
+                        <img src="{{ url_for('video_feed') }}" class="live-video" alt="Live Feed">
+                        <div class="video-overlay">
+                            <div class="recording-indicator">
+                                <span class="rec-dot"></span>
+                                <span>LIVE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction Panel -->
+                <div class="cyber-card prediction-card">
+                    <div class="card-header-cyber">
+                        <span class="header-icon">🔮</span>
+                        <h2>AI CROWD PREDICTION</h2>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="prediction-content">
+                        <div class="prediction-row">
+                            <div class="pred-label">CURRENT</div>
+                            <div class="pred-value current" id="predCurrent">0</div>
+                        </div>
+                        <div class="prediction-arrow">▼</div>
+                        <div class="prediction-row">
+                            <div class="pred-label">+5 SECONDS</div>
+                            <div class="pred-value" id="pred5s">0</div>
+                        </div>
+                        <div class="prediction-row">
+                            <div class="pred-label">+10 SECONDS</div>
+                            <div class="pred-value" id="pred10s">0</div>
+                        </div>
+                        <div class="trend-indicator">
+                            <span class="trend-label">TREND:</span>
+                            <span class="trend-value" id="trendValue">STABLE</span>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-label">CONFIDENCE</div>
+                            <div class="confidence-track">
+                                <div class="confidence-fill" id="confidenceFill"></div>
+                            </div>
+                            <div class="confidence-percent" id="confidencePercent">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER COLUMN: Main Analytics -->
+            <div class="column column-center">
+                <!-- People Counter -->
+                <div class="cyber-card counter-card-main">
+                    <div class="card-header-cyber">
+                        <span class="header-icon">👥</span>
+                        <h2>CROWD COUNT</h2>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="counter-main-display">
+                        <div class="counter-digital" id="peopleCount">0000</div>
+                        <div class="counter-label">DETECTED INDIVIDUALS</div>
+                        <div class="counter-change-indicator" id="changeIndicator"></div>
+                    </div>
+                </div>
+
+                <!-- Risk Assessment -->
+                <div class="cyber-card risk-card-main">
+                    <div class="card-header-cyber">
+                        <span class="header-icon">⚠️</span>
+                        <h2>THREAT LEVEL</h2>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="risk-display">
+                        <div class="risk-hexagon-container">
+                            <div class="risk-hexagon" id="riskHexagon">
+                                <div class="risk-level-text" id="riskLevel">LOW</div>
+                            </div>
+                            <div class="risk-glow" id="riskGlow"></div>
+                        </div>
+                        <div class="risk-description" id="riskDescription">
+                            Environment secure. No immediate threat detected.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Density Meter -->
+                <div class="cyber-card density-card">
+                    <div class="card-header-cyber">
+                        <span class="header-icon">📊</span>
+                        <h2>DENSITY ANALYSIS</h2>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="density-display">
+                        <div class="density-meter">
+                            <canvas id="densityCanvas" width="300" height="300"></canvas>
+                            <div class="density-center">
+                                <div class="density-value" id="densityValue">0</div>
+                                <div class="density-unit">%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Stats & Analytics -->
+            <div class="column column-right">
+                <!-- Surge Meter -->
+                <div class="cyber-card surge-card">
+                    <div class="card-header-cyber">
+                        <span class="header-icon">📈</span>
+                        <h2>SURGE PROBABILITY</h2>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="surge-display">
+                        <div class="surge-bars">
+                            <div class="surge-bar" id="surgeBar1"></div>
+                            <div class="surge-bar" id="surgeBar2"></div>
+                            <div class="surge-bar" id="surgeBar3"></div>
+                            <div class="surge-bar" id="surgeBar4"></div>
+                            <div class="surge-bar" id="surgeBar5"></div>
+                        </div>
+                        <div class="surge-value" id="surgeValue">0%</div>
+                    </div>
+                </div>
+
+                <!-- System Info -->
+                <div class="cyber-card info-card">
+                    <div class="card-header-cyber">
+                        <span class="header-icon">💻</span>
+                        <h2>SYSTEM TELEMETRY</h2>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-key">STATUS</div>
+                            <div class="info-val" id="sysStatus">ONLINE</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-key">UPTIME</div>
+                            <div class="info-val" id="uptime">00:00:00</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-key">LAST UPDATE</div>
+                            <div class="info-val" id="lastUpdate">--:--:--</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-key">VIDEO PROGRESS</div>
+                            <div class="info-val" id="videoProgress">0%</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-key">DATA RATE</div>
+                            <div class="info-val">1 Hz</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-key">AI MODEL</div>
+                            <div class="info-val">YOLOv8</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Graph -->
+                <div class="cyber-card graph-card">
+                    <div class="card-header-cyber">
+                        <span class="header-icon">📉</span>
+                        <h2>CROWD TIMELINE</h2>
+                        <div class="header-line"></div>
+                    </div>
+                    <div class="graph-container">
+                        <canvas id="timelineChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clean Footer - No Duplicate Buttons -->
+        <footer class="cyber-footer">
+            <div class="footer-content">
+                <span>© 2025 CYBER CROWD INTELLIGENCE SYSTEM</span>
+                <span class="separator">|</span>
+                <span>POWERED BY AI & COMPUTER VISION</span>
+                <span class="separator">|</span>
+                <span class="pulse-text">HACKATHON PROJECT</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Help Widget (Optional) -->
+    <div class="floating-help">
+        <button class="floating-help-btn" id="floatingHelpBtn" title="Quick Help">❓</button>
+        <div class="floating-help-menu" id="floatingHelpMenu">
+            <a href="/settings">⚙️ System Settings</a>
+            <a href="/help" target="_blank">📚 Help Center</a>
+            <a href="/faq" target="_blank">❓ FAQ</a>
+            <a href="/manual" target="_blank">📖 User Manual</a>
+            <a href="#" id="quickTips">💡 Quick Tips</a>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="help-modal" id="helpModal">
+        <div class="help-modal-content">
+            <button class="help-modal-close" onclick="closeHelpModal()">✕</button>
+            <div class="help-modal-title" id="helpTitle">Help</div>
+            <div class="help-modal-text" id="helpContent"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script_advanced.js') }}"></script>
+    <script>
+        // Floating Help Widget
+        const floatingHelpBtn = document.getElementById('floatingHelpBtn');
+        const floatingHelpMenu = document.getElementById('floatingHelpMenu');
+
+        floatingHelpBtn.addEventListener('click', () => {
+            floatingHelpMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.floating-help')) {
+                floatingHelpMenu.classList.remove('active');
+            }
+        });
+
+        // Quick Tips Modal
+        document.getElementById('quickTips').addEventListener('click', (e) => {
+            e.preventDefault();
+            showHelpModal('💡 Quick Tips', `
+                <div class="quick-tips">
+                    <strong>👥 Crowd Count:</strong> Real-time count of detected people<br><br>
+                    <strong>⚠️ Risk Levels:</strong><br>
+                    🟢 LOW: < 1 person/m²<br>
+                    🟡 MEDIUM: 1-2.5 person/m²<br>
+                    🟠 HIGH: 2.5-4 person/m²<br>
+                    🔴 CRITICAL/EMERGENCY: > 4 person/m²<br><br>
+                    <strong>📊 Density:</strong> Percentage of crowding (0-100%)<br><br>
+                    <strong>🔮 Predictions:</strong> AI forecasts for next 5-10 seconds<br><br>
+                    <strong>🌊 Surge:</strong> Probability of sudden crowd increase<br><br>
+                    <strong>⚙️ Settings:</strong> Click top-right to adjust all parameters!
+                </div>
+            `);
+        });
+
+        function showHelpModal(title, content) {
+            document.getElementById('helpTitle').textContent = title;
+            document.getElementById('helpContent').innerHTML = content;
+            document.getElementById('helpModal').classList.add('active');
+        }
+
+        function closeHelpModal() {
+            document.getElementById('helpModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('helpModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('helpModal')) {
+                closeHelpModal();
+            }
+        });
+    </script>
+</body>
+</html>
